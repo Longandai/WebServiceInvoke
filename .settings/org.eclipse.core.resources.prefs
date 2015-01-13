@@ -1,9 +1,5 @@
 eclipse.preferences.version=1
-encoding//src/com/oracle/xmlns/Interface/GeneralMDMDataRelease/GeneralMDMDataRelease/GeneralMDMDataRelease.java=UTF-8
-encoding//src/com/oracle/xmlns/Interface/GeneralMDMDataRelease/GeneralMDMDataRelease/GeneralMDMDataReleaseBindingStub.java=UTF-8
-encoding//src/com/oracle/xmlns/Interface/GeneralMDMDataRelease/GeneralMDMDataRelease/Generalmdmdatarelease_client_ep.java=UTF-8
-encoding//src/com/oracle/xmlns/Interface/GeneralMDMDataRelease/GeneralMDMDataRelease/Generalmdmdatarelease_client_epLocator.java=UTF-8
-encoding//src/com/oracle/xmlns/Interface/MDMTableData/MDMTableData/MDMTableData.java=UTF-8
-encoding//src/com/oracle/xmlns/Interface/MDMTableData/MDMTableData/MDMTableDataBindingStub.java=UTF-8
-encoding//src/com/oracle/xmlns/Interface/MDMTableData/MDMTableData/Mdmtabledata_client_ep.java=UTF-8
-encoding//src/com/oracle/xmlns/Interface/MDMTableData/MDMTableData/Mdmtabledata_client_epLocator.java=UTF-8
+encoding//src/com/core/general/involke/GeneralMDMDataRelease.java=UTF-8
+encoding//src/com/core/general/involke/GeneralMDMDataReleaseBindingStub.java=UTF-8
+encoding//src/com/core/general/involke/Generalmdmdatarelease_client_ep.java=UTF-8
+encoding//src/com/core/general/involke/Generalmdmdatarelease_client_epLocator.java=UTF-8

@@ -10,16 +10,12 @@ import javax.xml.rpc.holders.StringHolder;
 
 import org.junit.Test;
 
-import com.oracle.xmlns.Interface.GeneralMDMDataRelease.GeneralMDMDataRelease.GeneralMDMDataRelease;
-import com.oracle.xmlns.Interface.GeneralMDMDataRelease.GeneralMDMDataRelease.Generalmdmdatarelease_client_ep;
-import com.oracle.xmlns.Interface.GeneralMDMDataRelease.GeneralMDMDataRelease.Generalmdmdatarelease_client_epLocator;
-import com.oracle.xmlns.Interface.MDMTableData.MDMTableData.MDMTableData;
-import com.oracle.xmlns.Interface.MDMTableData.MDMTableData.MDMTableDataProxy;
-import com.oracle.xmlns.Interface.MDMTableData.MDMTableData.Mdmtabledata_client_ep;
-import com.oracle.xmlns.Interface.MDMTableData.MDMTableData.Mdmtabledata_client_epLocator;
-import com.result.prase.Parse;
-import com.result.prase.XMLParseByJsoup;
-import com.result.prase.XMLParseByDOM;
+import com.core.general.involke.GeneralMDMDataRelease;
+import com.core.general.involke.Generalmdmdatarelease_client_ep;
+import com.core.general.involke.Generalmdmdatarelease_client_epLocator;
+import com.core.result.prase.Parse;
+import com.core.result.prase.XMLParseByDOM;
+import com.core.result.prase.XMLParseByJsoup;
 
 import static org.junit.Assert.*;
 public class ServiceTest {
@@ -43,8 +39,8 @@ public class ServiceTest {
 			String IN_TABLE_NAME ="HM_MTL_GENERAL";
 			String IN_STARTDATE ="2014-1-1";
 			String IN_ENDDATE ="2015-1-1";
-			String IN_PAGE ="3";
-			String IN_BATCH_ID = "201501120885";
+			String IN_PAGE ="1";
+			String IN_BATCH_ID = "";
 			md.process(IN_SYS_NAME, IN_MASTER_TYPE, IN_TABLE_NAME, IN_STARTDATE, IN_ENDDATE, IN_PAGE, IN_BATCH_ID, OUT_PAGE, OUT_RESULT, OUT_RETCODE, OUT_ALL_NUM, OUT_PAGE_CON, OUT_ALL_COUNT, OUT_RETMSG, OUT_BATCH_ID);
 			Parse p  = new XMLParseByDOM();
 			System.out.println("OUT_PAGE:---"+OUT_PAGE.value);
@@ -58,21 +54,12 @@ public class ServiceTest {
 			p.setXml(OUT_RESULT.value);
 			p.parse();
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		//assertTrue(true);
-	}
-	@Test
-	public void testParse(){
-		new XMLParseByDOM().parse();
-		assertTrue(true);
 	}
 }
