@@ -11,7 +11,7 @@
 	<classpathentry kind="lib" path="F:/软件/eclipse-jee-indigo-SR2-win32/eclipse/plugins/org.apache.commons.logging_1.0.4.v201101211617.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="G:/we/RegionCodeAutoGet/lib/jsoup-1.7.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Long/Desktop/axis/mail.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Long/Desktop/axis/activation.jar"/>
+	<classpathentry kind="lib" path="G:/we/WebServiceInvoke/lib/activation.jar"/>
+	<classpathentry kind="lib" path="G:/we/WebServiceInvoke/lib/mail.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

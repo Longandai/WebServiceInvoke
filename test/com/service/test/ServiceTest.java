@@ -39,10 +39,10 @@ public class ServiceTest {
 			String IN_TABLE_NAME ="HM_MTL_GENERAL";
 			String IN_STARTDATE ="2014-1-1";
 			String IN_ENDDATE ="2015-1-1";
-			String IN_PAGE ="1";
-			String IN_BATCH_ID = "";
+			String IN_PAGE ="2";
+			String IN_BATCH_ID = "201501151118";
 			md.process(IN_SYS_NAME, IN_MASTER_TYPE, IN_TABLE_NAME, IN_STARTDATE, IN_ENDDATE, IN_PAGE, IN_BATCH_ID, OUT_PAGE, OUT_RESULT, OUT_RETCODE, OUT_ALL_NUM, OUT_PAGE_CON, OUT_ALL_COUNT, OUT_RETMSG, OUT_BATCH_ID);
-			Parse p  = new XMLParseByDOM();
+			Parse p  = new XMLParseByJsoup();
 			System.out.println("OUT_PAGE:---"+OUT_PAGE.value);
 			System.out.println("OUT_RETCODE:---"+OUT_RETCODE.value);
 			System.out.println("OUT_ALL_NUM:---"+OUT_ALL_NUM.value);
