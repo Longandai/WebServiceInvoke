@@ -1,6 +1,18 @@
 package com.core.result.prase;
 
-public interface Parse {
-	public void setXml(String xml);
-	public void parse();
+import java.util.Set;
+
+public abstract class Parse {
+	protected String xml;
+	protected Set<String> fields;
+	
+	
+	public  void setXml(String xml){
+		this.xml = xml;
+		
+	};
+	public abstract void parse() throws Exception;
+	public  void setFields(Set<String > fields){
+		this.fields = fields;
+	};
 }

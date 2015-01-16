@@ -1,18 +1,9 @@
 package com.service.test;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.rmi.RemoteException;
-
-import javax.xml.rpc.ServiceException;
-import javax.xml.rpc.holders.IntHolder;
-import javax.xml.rpc.holders.StringHolder;
-
+import java.util.HashSet;
 import org.junit.Test;
-
-import com.core.general.involke.GeneralMDMDataRelease;
-import com.core.general.involke.Generalmdmdatarelease_client_ep;
-import com.core.general.involke.Generalmdmdatarelease_client_epLocator;
+import com.core.main.InvokeContext;
+import com.core.main.Invoker;
 import com.core.result.prase.Parse;
 import com.core.result.prase.XMLParseByDOM;
 import com.core.result.prase.XMLParseByJsoup;
@@ -20,46 +11,80 @@ import com.core.result.prase.XMLParseByJsoup;
 import static org.junit.Assert.*;
 public class ServiceTest {
 	@Test
-	public void testService(){
-		String ad = "http://10.135.16.46:10201/soa-infra/services/interface/GeneralMDMDataRelease/generalmdmdatarelease_client_ep";
-		Generalmdmdatarelease_client_ep client_ep = new Generalmdmdatarelease_client_epLocator();
-		GeneralMDMDataRelease md =null;
+	public void testInvoke(){
 		try {
-			md = client_ep.getGeneralMDMDataRelease_pt(new URL(ad));
-			StringHolder OUT_PAGE = new StringHolder();
-			StringHolder OUT_RESULT = new StringHolder();
-			StringHolder OUT_RETCODE = new StringHolder();
-			IntHolder OUT_ALL_NUM = new IntHolder();
-			IntHolder OUT_PAGE_CON = new IntHolder();
-			StringHolder OUT_ALL_COUNT = new StringHolder();
-			StringHolder OUT_RETMSG = new StringHolder();
-			StringHolder OUT_BATCH_ID = new StringHolder();
+			InvokeContext context = new InvokeContext();
 			String IN_SYS_NAME ="S00748";
 			String IN_MASTER_TYPE ="HopeMDM";
 			String IN_TABLE_NAME ="HM_MTL_GENERAL";
 			String IN_STARTDATE ="2014-1-1";
 			String IN_ENDDATE ="2015-1-1";
-			String IN_PAGE ="2";
-			String IN_BATCH_ID = "201501151118";
-			md.process(IN_SYS_NAME, IN_MASTER_TYPE, IN_TABLE_NAME, IN_STARTDATE, IN_ENDDATE, IN_PAGE, IN_BATCH_ID, OUT_PAGE, OUT_RESULT, OUT_RETCODE, OUT_ALL_NUM, OUT_PAGE_CON, OUT_ALL_COUNT, OUT_RETMSG, OUT_BATCH_ID);
-			Parse p  = new XMLParseByJsoup();
-			System.out.println("OUT_PAGE:---"+OUT_PAGE.value);
-			System.out.println("OUT_RETCODE:---"+OUT_RETCODE.value);
-			System.out.println("OUT_ALL_NUM:---"+OUT_ALL_NUM.value);
-			System.out.println("OUT_PAGE_CON:---"+OUT_PAGE_CON.value);
-			System.out.println("OUT_ALL_COUNT:---"+OUT_ALL_COUNT.value);
-			System.out.println("OUT_RETMSG:---"+OUT_RETMSG.value);
-			System.out.println("OUT_BATCH_ID:---"+OUT_BATCH_ID.value);
-			System.out.println("OUT_RESULT:---"+OUT_RESULT.value);
-			p.setXml(OUT_RESULT.value);
-			p.parse();
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (ServiceException e) {
-			e.printStackTrace();
-		} catch (RemoteException e) {
+			String IN_PAGE ="1";
+			String IN_BATCH_ID = "";
+			String targetURL = "http://10.135.16.46:10201/soa-infra/services/interface/GeneralMDMDataRelease/generalmdmdatarelease_client_ep";
+			context.setIN_SYS_NAME(IN_SYS_NAME);
+			context.setIN_MASTER_TYPE(IN_MASTER_TYPE);
+			context.setIN_TABLE_NAME(IN_TABLE_NAME);
+			context.setIN_STARTDATE(IN_STARTDATE);
+			context.setIN_ENDDATE(IN_ENDDATE);
+			context.setIN_PAGE(IN_PAGE);
+			context.setIN_BATCH_ID(IN_BATCH_ID);
+			context.setTargetURL(targetURL);
+			Invoker invoker = new Invoker();
+			invoker.setContext(context);
+			invoker.invoke();
+			System.out.println("OUT_PAGE:---"+context.getOUT_PAGE().value);
+			System.out.println("OUT_RETCODE:---"+context.getOUT_RETCODE().value);
+			System.out.println("OUT_ALL_NUM:---"+context.getOUT_ALL_NUM().value);
+			System.out.println("OUT_PAGE_CON:---"+context.getOUT_PAGE_CON().value);
+			System.out.println("OUT_ALL_COUNT:---"+context.getOUT_ALL_COUNT().value);
+			System.out.println("OUT_RETMSG:---"+context.getOUT_RETMSG().value);
+			System.out.println("OUT_BATCH_ID:---"+context.getOUT_BATCH_ID().value);
+			System.out.println("OUT_RESULT:---"+context.getOUT_RESULT().value);
+			//差错校验
+			if(context.getOUT_RETCODE().value.equals("E")){
+				System.out.println(context.getOUT_RETMSG().value);
+				return ;
+			}
+			//先解析第一条数据
+			String flieName = "InvokeTest";
+			String fileURL= "C://InvokeTest/"+flieName+context.getOUT_PAGE().value+".txt";
+			Parse parse = new XMLParseByJsoup().setFileURL(fileURL);
+			HashSet<String> fields = new HashSet<String>();
+			fields.add("ROW_ID");
+			fields.add("CREATED");
+			fields.add("MATERIAL_CODE");
+			fields.add("MATERIAL_DESCRITION");
+			fields.add("LAST_UPD");
+			parse.setXml(context.getOUT_RESULT().value);
+			parse.setFields(fields);
+			parse.parse();
+			
+			
+			//解析其余数据
+			int allCount =Integer.parseInt(context.getOUT_ALL_COUNT().value);
+			if(allCount>1){
+				for(int i =2;i<=allCount;i++){
+					context.setIN_PAGE(new Integer(i).toString());
+					context.setIN_BATCH_ID(context.getOUT_BATCH_ID().value);
+					invoker.setContext(context);
+					invoker.invoke();
+					//差错校验
+					if(context.getOUT_RETCODE().value.equals("E")){
+						System.out.println(context.getOUT_RETMSG().value);
+						return ;
+					 }
+					 fileURL= "C://InvokeTest/InvokeTest"+i+".txt";
+					 parse= new XMLParseByJsoup().setFileURL(fileURL);
+					 parse.setXml(context.getOUT_RESULT().value);
+					 parse.setFields(fields);
+					parse.parse();
+					}
+				}
+		} catch (Exception e) {
+			// TODO: handle exception
 			e.printStackTrace();
 		}
-		//assertTrue(true);
+		
 	}
 }

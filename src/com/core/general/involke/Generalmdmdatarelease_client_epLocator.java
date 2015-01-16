@@ -22,7 +22,7 @@ public class Generalmdmdatarelease_client_epLocator extends org.apache.axis.clie
     }
 
     // Use to get a proxy class for GeneralMDMDataRelease_pt
-    private java.lang.String GeneralMDMDataRelease_pt_address = "http://10.135.16.46:10201/soa-infra/services/interface/GeneralMDMDataRelease/generalmdmdatarelease_client_ep";
+    private java.lang.String GeneralMDMDataRelease_pt_address = "http://bpel.mdm.haier.com:7778/soa-infra/services/interface/GeneralMDMDataRelease/generalmdmdatarelease_client_ep";
 
     public java.lang.String getGeneralMDMDataRelease_ptAddress() {
         return GeneralMDMDataRelease_pt_address;
